@@ -2,6 +2,7 @@ import { motion, useMotionValueEvent, useScroll } from 'framer-motion';
 import { useState } from 'react';
 import { useScrollTo } from '../lenis';
 import { TESTER_SIGNUP_URL } from '../config';
+import { openSignup } from '../signup';
 
 export function Logo({ size = 30 }: { size?: number }) {
   return (
@@ -55,7 +56,7 @@ export default function Nav() {
         <a href="#kartet" onClick={(e) => { e.preventDefault(); scrollTo('#kartet', -40); }}>På kartet</a>
         <a href="#byer" onClick={(e) => { e.preventDefault(); scrollTo('#byer', -40); }}>Andre byer</a>
       </nav>
-      <a className="button button--small" href={TESTER_SIGNUP_URL}>
+      <a className="button button--small" href={TESTER_SIGNUP_URL} onClick={(e) => openSignup(e, 'meny')}>
         Bli testbruker
       </a>
     </motion.header>

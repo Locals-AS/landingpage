@@ -5,7 +5,7 @@ import Phone from './Phone';
 import ScreenMap from '../screens/ScreenMap';
 import ScreenEvent from '../screens/ScreenEvent';
 import ScreenCreate from '../screens/ScreenCreate';
-import ScreenChat from '../screens/ScreenChat';
+import ScreenComments from '../screens/ScreenComments';
 import { useScrollTo } from '../lenis';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -31,9 +31,9 @@ const STEPS: { title: string; text: string; glow: string; screen: () => ReactNod
   },
   {
     title: 'Møt folk',
-    text: 'Chat med de som blir med før dere møtes, og legg til venner du vil se igjen.',
+    text: 'Si hei i kommentarene før dere møtes. Da er det ikke fremmede du møter, bare folk du ikke har sett ennå. Likte du dem? Legg dem til som venner.',
     glow: 'var(--c-friend)',
-    screen: () => <ScreenChat />,
+    screen: () => <ScreenComments />,
   },
 ];
 

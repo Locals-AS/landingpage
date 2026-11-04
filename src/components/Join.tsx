@@ -2,6 +2,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import { Logo } from './Nav';
 import { TESTER_SIGNUP_URL } from '../config';
+import { openSignup } from '../signup';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -42,8 +43,8 @@ export default function Join() {
           viewport={{ once: true, margin: '-15% 0px' }}
           transition={{ duration: 0.9, delay: 0.2, ease: EASE }}
         >
-          Vi tester Locals med en liten gruppe nå. Meld deg på, så får du en
-          invitasjon til testversjonen på iPhone.
+          Vi fyller kartet nå. Har du iPhone, kan du teste allerede. Har du Android,
+          får du beskjed så fort appen er klar. Pinnen din venter.
         </motion.p>
         <motion.div
           className="join-actions"
@@ -52,8 +53,8 @@ export default function Join() {
           viewport={{ once: true, margin: '-15% 0px' }}
           transition={{ duration: 0.9, delay: 0.3, ease: EASE }}
         >
-          <motion.a className="button button--large" href={TESTER_SIGNUP_URL} whileHover={{ y: -3 }} whileTap={{ scale: 0.97 }}>
-            Meld deg på testen
+          <motion.a className="button button--large" href={TESTER_SIGNUP_URL} onClick={(e) => openSignup(e, 'bunnen')} whileHover={{ y: -3 }} whileTap={{ scale: 0.97 }}>
+            Sett meg på kartet
           </motion.a>
           <div className="stores">
             <span className="store">

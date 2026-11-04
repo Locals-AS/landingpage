@@ -7,6 +7,7 @@ import ScreenMap from '../screens/ScreenMap';
 import { Avatars } from '../screens/parts';
 import { useScrollTo } from '../lenis';
 import { TESTER_SIGNUP_URL } from '../config';
+import { openSignup } from '../signup';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -15,7 +16,7 @@ const MAP_PINS: { kind: Kind; x: number; y: number; label: string }[] = [
   { kind: 'meetup', x: 92, y: 30, label: 'Søndagstur rundt vannet' },
   { kind: 'place', x: 50, y: 82, label: 'Nytt bakeri åpnet i dag' },
   { kind: 'friend', x: 86, y: 74, label: 'Jonas er ute' },
-  { kind: 'meetup', x: 8, y: 86, label: 'Brettspill, 2 plasser igjen' },
+  { kind: 'meetup', x: 8, y: 86, label: 'Brettspillkveld på kaféen' },
   { kind: 'event', x: 96, y: 54, label: 'Loppemarked i parken' },
   { kind: 'place', x: 64, y: 50, label: 'Kafé med uteservering' },
   { kind: 'meetup', x: 36, y: 10, label: 'Løpetur i morgen 07.00' },
@@ -120,7 +121,7 @@ export default function Hero() {
             className="lede"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.75, ease: EASE }}
+            transition={{ duration: 0.8, delay: 0.45, ease: EASE }}
           >
             Locals er et levende kart over nabolaget ditt. Finn konserter, quiz og
             løpeturer i nærheten, lag et treff der du står, og bli med når andre gjør
@@ -130,9 +131,9 @@ export default function Hero() {
             className="hero-actions"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.9, ease: EASE }}
+            transition={{ duration: 0.8, delay: 0.6, ease: EASE }}
           >
-            <motion.a className="button" href={TESTER_SIGNUP_URL} whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }}>
+            <motion.a className="button" href={TESTER_SIGNUP_URL} onClick={(e) => openSignup(e, 'toppen')} whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }}>
               Bli testbruker
             </motion.a>
             <button className="button button--ghost" onClick={() => scrollTo('#slik')}>
@@ -143,7 +144,7 @@ export default function Hero() {
             className="hero-note"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 1.3 }}
+            transition={{ duration: 1, delay: 0.9 }}
           >
             Kommer snart til iPhone og Android.
           </motion.p>

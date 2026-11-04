@@ -8,7 +8,7 @@ const TITLE = 'Kaffe og kryssord';
 const FIELDS = [
   { label: 'Når', value: 'Om 30 minutter' },
   { label: 'Hvor', value: 'Der du står nå' },
-  { label: 'Plass til', value: '6 personer' },
+  { label: 'Hvem ser det', value: 'Hele byen' }, // appen har ikke maks antall deltakere ennå (Regler i appen: 💡 Forslag)
 ];
 
 export default function ScreenCreate() {
