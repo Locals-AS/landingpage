@@ -9,12 +9,12 @@ const ITEMS: { kind: Kind; title: string; text: string }[] = [
   {
     kind: 'meetup',
     title: 'Treff',
-    text: 'Laget av folk i nærheten, akkurat nå eller litt senere. Du ser hvor mange som skal og om det er plass.',
+    text: 'Laget av folk i nærheten, akkurat nå eller litt senere. Du ser hvor mange som skal.',
   },
   {
     kind: 'event',
     title: 'Arrangementer',
-    text: 'Konserter, kamper og forestillinger, med tid, sted og lenke til billetter.',
+    text: 'Skal du på konsert alene? Se hvem andre som skal, og lag et treff før eller etter.',
   },
   {
     kind: 'place',

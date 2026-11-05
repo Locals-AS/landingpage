@@ -35,15 +35,26 @@ export default function Travel() {
   const travelerTop = useTransform(py, (v) => `${(v / 440) * 100}%`);
 
   // På smale skjermer er ruta bredere enn skjermen og panorerer etter prikken.
+  // Hvor langt ruta panorerer, må passe med bredden på .travel-stage i styles.css.
   const [narrow, setNarrow] = useState(false);
+  const [small, setSmall] = useState(false);
   useEffect(() => {
     const mq = window.matchMedia('(max-width: 900px)');
-    const update = () => setNarrow(mq.matches);
+    const mqSmall = window.matchMedia('(max-width: 560px)');
+    const update = () => {
+      setNarrow(mq.matches);
+      setSmall(mqSmall.matches);
+    };
     update();
     mq.addEventListener('change', update);
-    return () => mq.removeEventListener('change', update);
+    mqSmall.addEventListener('change', update);
+    return () => {
+      mq.removeEventListener('change', update);
+      mqSmall.removeEventListener('change', update);
+    };
   }, []);
-  const pan = useTransform(draw, [0, 1], ['0%', '-62%']);
+  const panSmall = useTransform(draw, [0, 1], ['0%', '-56%']); // mobil, ruta er 220 % bred
+  const panMedium = useTransform(draw, [0, 1], ['0%', '-33%']); // nettbrett, ruta er 140 % bred
 
   useMotionValueEvent(draw, 'change', (v) => {
     const path = pathRef.current;
@@ -83,7 +94,7 @@ export default function Travel() {
         </div>
 
         <div className="travel-window">
-        <motion.div className="travel-stage" style={narrow ? { x: pan } : undefined}>
+        <motion.div className="travel-stage" style={narrow ? { x: small ? panSmall : panMedium } : undefined}>
           <svg viewBox="0 0 1220 440" className="travel-svg" aria-hidden="true">
             <path d={ROUTE} fill="none" stroke="var(--line)" strokeWidth="3" strokeDasharray="2 10" strokeLinecap="round" />
             <motion.path

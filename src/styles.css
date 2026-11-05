@@ -4,7 +4,7 @@
   --paper: #ffffff;
   --ink: #17203a;
   --ink-soft: #56607c;
-  --ink-faint: #8a93ab;
+  --ink-faint: #68718b; /* var #8a93ab, ga for lav kontrast (2,89:1). Nå 4,57:1 mot --mist */
   --line: #e2e8f2;
   --line-strong: #c9d2e2;
   --blue: #3b82f6;
@@ -712,58 +712,83 @@ button {
   overflow: hidden;
 }
 
-.bubble {
-  align-self: flex-start;
-  max-width: 78%;
-  padding: 8px 12px;
-  border-radius: 18px 18px 18px 6px;
-  background: #fff;
-  box-shadow: 0 4px 12px -8px rgba(23, 32, 58, 0.35);
-  font-size: 0.78rem;
-  line-height: 1.35;
-  transform-origin: 0 100%;
+/* kommentarer på et treff (appen har kommentarfelt med svar i tråd, ikke live chat) */
+.comments-bar {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 10px 16px 4px;
+  font-size: 0.74rem;
 }
 
-.bubble-from {
+.comments-bar span {
+  color: var(--ink-faint);
+}
+
+.comments-bar em {
+  margin-left: auto;
+  font-style: normal;
+  font-size: 0.66rem;
+  color: var(--ink-faint);
+}
+
+.comments-body {
+  flex: 1;
+  padding: 8px 14px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow: hidden;
+}
+
+.comment {
+  display: flex;
+  gap: 9px;
+  align-items: flex-start;
+}
+
+.comment--reply {
+  margin-left: 36px;
+  margin-top: -4px;
+}
+
+.comment .avatar {
+  border: none;
+}
+
+.comment-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.comment-meta {
   display: block;
   font-size: 0.64rem;
+  color: var(--ink-faint);
+}
+
+.comment-meta b {
   font-weight: 650;
-  color: var(--c-meetup);
-  margin-bottom: 1px;
+  color: var(--ink);
 }
 
-.bubble--me {
-  align-self: flex-end;
-  border-radius: 18px 18px 6px 18px;
-  background: var(--brand);
-  color: #fff;
-  transform-origin: 100% 100%;
+.comment-main p {
+  margin: 1px 0 3px;
+  font-size: 0.76rem;
+  line-height: 1.35;
 }
 
-.bubble--typing {
+.comment-actions {
   display: flex;
-  gap: 4px;
-  padding: 12px 14px;
+  gap: 12px;
+  font-size: 0.62rem;
+  font-weight: 600;
+  color: var(--ink-faint);
 }
 
-.bubble--typing span {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--ink-faint);
-  animation: typing 1s infinite;
-}
-
-.bubble--me.bubble--typing span {
-  background: #fff;
-}
-
-.bubble--typing span:nth-child(2) { animation-delay: 0.15s; }
-.bubble--typing span:nth-child(3) { animation-delay: 0.3s; }
-
-@keyframes typing {
-  0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
-  30% { transform: translateY(-4px); opacity: 1; }
+.comment-like {
+  display: inline-block;
+  color: var(--c-meetup);
 }
 
 .chat-input {
@@ -982,6 +1007,7 @@ button {
 /* ---------- Story ---------- */
 .story {
   position: relative;
+  overflow-x: clip; /* bakgrunnskartet er bredere enn skjermen og ga sideveis scrolling på mobil */
 }
 
 .story-sticky {
@@ -1139,7 +1165,7 @@ button {
 
 .marquee-row:nth-of-type(2) .marquee-item {
   color: transparent;
-  -webkit-text-stroke: 1.3px var(--line-strong);
+  -webkit-text-stroke: 1.3px #858ea6; /* var --line-strong (1,43:1). Nå 3,08:1, nok for stor tekst */
 }
 
 .marquee-item i {
@@ -1152,6 +1178,7 @@ button {
   max-width: var(--max);
   margin: 0 auto;
   padding: clamp(60px, 10vw, 140px) var(--gutter);
+  overflow-x: clip; /* kortene glir inn fra høyre og ga sideveis scrolling på mobil før de var synlige */
 }
 
 .kinds-head {
@@ -1250,6 +1277,7 @@ button {
 .travel {
   position: relative;
   height: 240vh;
+  overflow-x: clip;
 }
 
 .travel-sticky {
@@ -1439,13 +1467,12 @@ button {
   justify-content: center;
 }
 
+/* «Snart i»-merkene er ikke lenker ennå, så de skal ikke se ut som knapper */
 .store {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 8px 18px;
-  border-radius: 14px;
-  box-shadow: inset 0 0 0 1.5px var(--line-strong);
+  padding: 4px 12px;
   font-weight: 620;
   letter-spacing: -0.02em;
   color: var(--ink-soft);
@@ -1588,12 +1615,21 @@ button {
   }
 
   .travel-stage {
-    width: 240%;
+    width: 140%; /* nettbrett: ruta panorerer litt */
     margin-left: var(--gutter);
+  }
+
+  /* På mobil havnet merkelappene på kartet oppå teksten eller utenfor skjermkanten */
+  .hero .callout {
+    display: none;
   }
 }
 
 @media (max-width: 560px) {
+  .travel-stage {
+    width: 220%; /* mobil: ruta er mye bredere enn skjermen og panorerer etter prikken */
+  }
+
   .float-card {
     padding: 10px 14px 10px 10px;
     border-radius: 16px;
@@ -1619,8 +1655,7 @@ button {
 @media (prefers-reduced-motion: reduce) {
   .you-ring,
   .join-ring,
-  .caret,
-  .bubble--typing span {
+  .caret {
     animation: none;
   }
 }

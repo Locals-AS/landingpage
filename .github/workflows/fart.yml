@@ -1,0 +1,49 @@
+name: Fartssjekk (Lighthouse)
+
+# Måler fart, tilgjengelighet, god praksis og SEO på mobil og PC hver gang noen
+# foreslår en endring (pull request), og kan også kjøres for hånd under Actions.
+# Grensene står i lighthouserc.mobil.json og lighthouserc.pc.json.
+# Rødt kryss = noe har falt under grensen. Gult = advarsel, se tabellen i oppsummeringen.
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+      - run: npm run build
+
+      - name: Mål på mobil
+        run: npx --yes @lhci/cli@0.16.0 autorun --config=./lighthouserc.mobil.json
+
+      - name: Mål på PC
+        if: always()
+        run: npx --yes @lhci/cli@0.16.0 autorun --config=./lighthouserc.pc.json
+
+      - name: Skriv oppsummering
+        if: always()
+        run: node scripts/fart-oppsummering.mjs >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Lagre rapportene
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-rapporter
+          path: |
+            .lighthouseci-mobil/
+            .lighthouseci-pc/
+          include-hidden-files: true
+          retention-days: 14
