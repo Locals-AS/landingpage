@@ -1,15 +1,18 @@
 /* ---------- Tokens ---------- */
 :root {
-  --mist: #f6f8fc;
+  /* Merkefarger fra logoen Vuggen (Plomme og sol). Hovedfargen bærer knapper og logo,
+     prikken er aksenten og brukes bare inni hovedfargen eller på mørke flater. */
+  --hoved: #5b1f5e;
+  --prikk: #ffc53d;
+  --mist: #faf7fa;
   --paper: #ffffff;
-  --ink: #17203a;
-  --ink-soft: #56607c;
-  --ink-faint: #68718b; /* var #8a93ab, ga for lav kontrast (2,89:1). Nå 4,57:1 mot --mist */
-  --line: #e2e8f2;
-  --line-strong: #c9d2e2;
-  --blue: #3b82f6;
-  --violet: #8b5cf6;
-  --brand: linear-gradient(135deg, #3fa2f7 0%, #6c7cf8 50%, #8b5cf6 100%);
+  --ink: #24112a;
+  --ink-soft: #5c5063;
+  --ink-faint: #6b6072; /* 5,6:1 mot --mist */
+  --line: #ece4ec;
+  --line-strong: #d6c9d7;
+  --blue: #3b82f6; /* appens blå i telefonbildene (posisjon og Events) */
+  --brand: var(--hoved);
 
   --c-meetup: #b37be8;
   --c-event: #3b82f6;
@@ -31,10 +34,30 @@
   --shadow-float: 0 18px 40px -16px rgba(40, 52, 110, 0.28);
 }
 
+/* Forhåndsvisning: fargesettet Natt-teal og rosa (?palett=teal). Fjernes når fargene er valgt. */
+[data-palett='teal'] {
+  --hoved: #0b3c49;
+  --prikk: #ff9eb5;
+  --mist: #f4f8f8;
+  --ink: #0b242b;
+  --ink-soft: #4a5d62;
+  --ink-faint: #5a6c71;
+  --line: #e1eaeb;
+  --line-strong: #c6d4d6;
+}
+
 *,
 *::before,
 *::after {
   box-sizing: border-box;
+}
+
+/* ---------- Ordmerket ---------- */
+.ordmerke {
+  display: block;
+  height: 1.2rem; /* tilsvarer skriftstørrelse 1,6 rem */
+  width: auto;
+  color: var(--ink);
 }
 
 html {
@@ -68,7 +91,7 @@ button {
 }
 
 :focus-visible {
-  outline: 2.5px solid var(--violet);
+  outline: 2.5px solid var(--hoved);
   outline-offset: 3px;
   border-radius: 8px;
 }
@@ -129,7 +152,7 @@ button {
   padding: 0 26px;
   border-radius: 999px;
   border: 0;
-  background: var(--ink);
+  background: var(--hoved);
   color: #fff;
   font-weight: 560;
   font-size: 1rem;
@@ -146,7 +169,7 @@ button {
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: var(--brand);
+  background: var(--ink);
   opacity: 0;
   transition: opacity 0.45s var(--ease);
 }
@@ -156,7 +179,18 @@ button {
 }
 
 .button:hover {
-  box-shadow: 0 14px 30px -12px rgba(108, 124, 248, 0.6);
+  box-shadow: 0 14px 30px -12px color-mix(in srgb, var(--hoved) 60%, transparent);
+}
+
+/* Prikken fra logoen foran teksten på hovedknappene */
+.button:not(.button--ghost)::after {
+  content: '';
+  order: -1;
+  flex-shrink: 0;
+  width: 0.5em;
+  height: 0.5em;
+  border-radius: 50%;
+  background: var(--prikk);
 }
 
 .button--ghost {
@@ -1379,9 +1413,9 @@ button {
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background: var(--brand);
+  background: var(--hoved);
   border: 4px solid #fff;
-  box-shadow: 0 0 0 8px rgba(139, 92, 246, 0.16), 0 8px 18px rgba(108, 92, 246, 0.45);
+  box-shadow: 0 0 0 8px color-mix(in srgb, var(--hoved) 16%, transparent), 0 8px 18px color-mix(in srgb, var(--hoved) 45%, transparent);
 }
 
 /* ---------- Join ---------- */
@@ -1401,8 +1435,8 @@ button {
   margin: -500px 0 0 -700px;
   border-radius: 50%;
   background:
-    radial-gradient(closest-side at 35% 50%, rgba(63, 162, 247, 0.22), transparent),
-    radial-gradient(closest-side at 65% 50%, rgba(139, 92, 246, 0.2), transparent);
+    radial-gradient(closest-side at 35% 50%, color-mix(in srgb, var(--prikk) 26%, transparent), transparent),
+    radial-gradient(closest-side at 65% 50%, color-mix(in srgb, var(--hoved) 16%, transparent), transparent);
   pointer-events: none;
 }
 
@@ -1417,19 +1451,19 @@ button {
 .join-mark {
   position: relative;
   width: 64px;
-  height: 80px;
-  margin-bottom: 8px;
+  height: 64px;
+  margin-bottom: 16px;
 }
 
 .join-ring {
   position: absolute;
   left: 50%;
-  top: 34px;
-  width: 54px;
-  height: 54px;
-  margin: -27px 0 0 -27px;
+  top: 32px;
+  width: 64px;
+  height: 64px;
+  margin: -32px 0 0 -32px;
   border-radius: 50%;
-  border: 1.5px solid rgba(108, 124, 248, 0.5);
+  border: 1.5px solid color-mix(in srgb, var(--hoved) 45%, transparent);
   animation: ping 3.2s var(--ease) infinite;
 }
 

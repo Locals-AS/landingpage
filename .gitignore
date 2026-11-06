@@ -5,3 +5,4 @@ dist
 
 # Fartssjekk (Lighthouse CI)
 .lighthouseci*/
+__pycache__/

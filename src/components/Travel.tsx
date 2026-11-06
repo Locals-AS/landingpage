@@ -108,8 +108,8 @@ export default function Travel() {
             />
             <defs>
               <linearGradient id="route-g" x1="0" x2="1">
-                <stop offset="0" stopColor="#3FA2F7" />
-                <stop offset="1" stopColor="#8B5CF6" />
+                <stop offset="0" stopColor="var(--hoved)" />
+                <stop offset="1" stopColor="var(--hoved)" />
               </linearGradient>
             </defs>
             {CITIES.map((c) => {
@@ -134,7 +134,7 @@ export default function Travel() {
                     cy={c.y}
                     r={on ? 11 : 7}
                     fill={on ? '#fff' : 'var(--mist)'}
-                    stroke={on ? 'var(--violet)' : 'var(--line-strong)'}
+                    stroke={on ? 'var(--hoved)' : 'var(--line-strong)'}
                     strokeWidth={on ? 4 : 2}
                     animate={{ r: on ? 11 : 7 }}
                     transition={{ type: 'spring', stiffness: 400, damping: 18 }}

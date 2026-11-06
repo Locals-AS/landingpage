@@ -4,19 +4,41 @@ import { useScrollTo } from '../lenis';
 import { TESTER_SIGNUP_URL } from '../config';
 import { openSignup } from '../signup';
 
+/* Logoen Vuggen: en «l» som svinger rundt prikken. Prikken er deg, ruta er byen rundt deg.
+   Fargene kommer fra --hoved og --prikk, så de byttes ett sted (styles.css). */
 export function Logo({ size = 30 }: { size?: number }) {
   return (
-    <svg viewBox="0 0 32 40" width={size} height={size * 1.25} aria-hidden="true">
-      <defs>
-        <linearGradient id="logo-g" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#3FA2F7" />
-          <stop offset="1" stopColor="#8B5CF6" />
-        </linearGradient>
-      </defs>
-      <path d="M16 39S2.5 26.6 2.5 15.5a13.5 13.5 0 0127 0C29.5 26.6 16 39 16 39z" fill="url(#logo-g)" />
-      <circle cx="16" cy="15.5" r="8.6" fill="#fff" />
-      <circle cx="16" cy="12.8" r="2.9" fill="url(#logo-g)" />
-      <path d="M10.6 21.2c.8-3 2.8-4.5 5.4-4.5s4.6 1.5 5.4 4.5a8.6 8.6 0 01-10.8 0z" fill="url(#logo-g)" />
+    <svg viewBox="0 0 100 100" width={size} height={size} aria-hidden="true" className="logo">
+      <rect width="100" height="100" rx="22.5" fill="var(--hoved)" />
+      <g transform="translate(11 11) scale(0.78) translate(-3 -1)">
+        <path
+          d="M30 16 L30 52 A34 34 0 0 0 64 86 L76 86"
+          fill="none"
+          stroke="#fff"
+          strokeWidth="19"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <circle cx="64" cy="52" r="14" fill="var(--prikk)" />
+      </g>
+    </svg>
+  );
+}
+
+/* Ordmerket «l●cals»: o-en er prikken fra logoen. Bokstavene er tegnet fra skriften Sora (fet,
+   sperret −0,04 em) som SVG, så siden ikke trenger å laste en egen skrift. Bokstavene følger
+   tekstfargen, prikken følger --hoved. */
+export function Ordmerke({ className = '' }: { className?: string }) {
+  return (
+    <svg className={`ordmerke ${className}`} viewBox="0 -730 2830 750" role="img" aria-label="Locals">
+      <g fill="currentColor">
+        <path transform="translate(0 0) scale(1 -1)" d="M80 0V612H15V730H241V0Z" />
+        <path transform="translate(885 0) scale(1 -1)" d="M319 -19Q248 -19 196 4Q143 28 108 68Q73 108 56 158Q39 209 39 263V282Q39 338 57 390Q75 441 110 481Q145 521 198 544Q250 567 318 567Q392 567 449 538Q506 510 540 459Q574 408 578 342H421Q417 379 392 404Q366 430 318 430Q278 430 252 410Q225 390 212 355Q199 320 199 272Q199 228 211 192Q223 157 250 138Q276 118 319 118Q351 118 374 130Q396 141 410 162Q423 182 426 209H582Q579 141 544 90Q509 38 451 10Q393 -19 319 -19Z" />
+        <path transform="translate(1456 0) scale(1 -1)" d="M404 0V105Q397 84 388 67Q365 28 326 7Q286 -14 229 -14Q170 -14 126 7Q81 28 56 68Q31 107 31 162Q31 222 62 260Q93 299 149 318Q205 336 278 336H377V338Q377 380 357 401Q337 422 293 422Q271 422 235 421Q199 420 161 418Q123 416 92 414V549Q115 551 146 553Q177 555 210 556Q243 557 272 557Q356 557 414 533Q471 509 501 460Q531 412 531 336V0ZM377 247H277Q235 247 212 226Q190 206 190 171Q190 138 212 118Q235 97 277 97Q304 97 326 106Q347 116 361 139Q375 162 377 203Z" />
+        <path transform="translate(2010 0) scale(1 -1)" d="M80 0V612H15V730H241V0Z" />
+        <path transform="translate(2285 0) scale(1 -1)" d="M281 -17Q164 -17 98 31Q32 79 28 166H170Q174 140 202 120Q229 99 284 99Q326 99 354 114Q381 128 381 155Q381 179 360 194Q339 208 285 214L242 218Q143 228 94 273Q44 318 44 388Q44 446 73 485Q102 524 154 544Q205 564 271 564Q377 564 442 518Q507 471 510 383H368Q364 410 340 428Q316 447 269 447Q232 447 210 433Q188 419 188 395Q188 372 207 360Q226 348 269 343L312 339Q413 328 469 283Q525 238 525 162Q525 107 495 66Q465 26 410 4Q355 -17 281 -17Z" />
+      </g>
+      <circle cx="600" cy="-275" r="290" fill="var(--hoved)" />
     </svg>
   );
 }
@@ -48,8 +70,7 @@ export default function Nav() {
           scrollTo(0);
         }}
       >
-        <Logo size={24} />
-        <span>Locals</span>
+        <Ordmerke />
       </a>
       <nav className="nav-links" aria-label="Hovedmeny">
         <a href="#slik" onClick={(e) => { e.preventDefault(); scrollTo('#slik'); }}>Slik virker det</a>
